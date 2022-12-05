@@ -5,9 +5,10 @@ import {
   Roboto_400Regular,
   Roboto_700Bold
 } from '@expo-google-fonts/roboto';
+import { Loading } from '@components/Loading';
 import { Groups } from '@screens/Groups';
 import { NewGroup } from '@screens/NewGroup';
-import { Loading } from '@components/Loading';
+import { Players } from '@screens/Players';
 import theme from './src/theme';
 
 export default function App() {
@@ -24,7 +25,7 @@ export default function App() {
         translucent
       />
 
-      {fontsLoaded ? <NewGroup /> : <Loading />}
+      {fontsLoaded ? <Players /> : <Loading />}
     </ThemeProvider>
   );
 }
