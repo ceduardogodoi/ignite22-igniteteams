@@ -6,6 +6,7 @@ import { Header } from '@components/Header';
 import { Highlight } from '@components/Highlight';
 import { Input } from '@components/Input';
 import { Container, Form, HeaderList, NumberOfPlayers } from './styles';
+import { PlayerCard } from '@components/PlayerCard';
 
 export function Players() {
   const [team, setTeam] = useState('Time A');
@@ -48,6 +49,17 @@ export function Players() {
           {players.length}
         </NumberOfPlayers>
       </HeaderList>
+
+      <FlatList
+        data={players}
+        keyExtractor={item => item}
+        renderItem={({ item }) => (
+          <PlayerCard
+            name={item}
+            onRemove={() => { }}
+          />
+        )}
+      />
     </Container>
   );
 }
