@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from '@components/Button';
 import { Header } from '@components/Header';
@@ -6,10 +7,11 @@ import { Input } from '@components/Input';
 import { Container, Content, Icon } from './styles';
 
 export function NewGroup() {
+  const [group, setGroup] = useState('');
   const navigation = useNavigation();
 
   function handleNew() {
-    navigation.navigate('players', { group: 'Rocket' });
+    navigation.navigate('players', { group });
   }
 
   return (
@@ -24,7 +26,11 @@ export function NewGroup() {
           subtitle="Crie a turma para adicionar as pessoas"
         />
 
-        <Input placeholder="Nome da turma" />
+        <Input
+          placeholder="Nome da turma"
+          value={group}
+          onChangeText={setGroup}
+        />
         <Button
           style={{ marginTop: 20 }}
           title="Criar"
