@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Alert, FlatList } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Alert, FlatList, TextInput } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { ButtonIcon } from '@components/ButtonIcon';
 import { Filter } from '@components/Filter';
@@ -23,6 +23,7 @@ export function Players() {
   const [newPlayerName, setNewPlayerName] = useState('');
   const [team, setTeam] = useState('Time A');
   const [players, setPlayers] = useState<PlayerStorageDTO[]>([]);
+  const newPlayerNameInputRef = useRef<TextInput>(null)
 
   const route = useRoute();
   const { group } = route.params as RouteParams;
@@ -37,6 +38,10 @@ export function Players() {
       try {
         await playerAddByGroup(newPlayer, group);
         await fetchPlayersByTeam();
+
+        newPlayerNameInputRef.current?.blur();
+
+        setNewPlayerName('');
       } catch (error) {
         if (error instanceof AppError) {
           Alert.alert('Nova pessoa', error.message);
@@ -75,10 +80,13 @@ export function Players() {
 
       <Form>
         <Input
+          inputRef={newPlayerNameInputRef}
           value={newPlayerName}
           onChangeText={setNewPlayerName}
           placeholder="Nome da pessoa"
           autoCorrect={false}
+          onSubmitEditing={handleAddPlayer}
+          returnKeyType="done"
         />
         <ButtonIcon
           icon="add"
